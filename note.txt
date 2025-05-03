@@ -21,6 +21,13 @@ docker network create bank-network
 
 kubectl apply -f ./eks/aws-auth.yaml
 
-aws eks update-kubeconfig --region ap-southeast-1 --name my-cluster --role-arn arn:aws:iam::502901958302:user/github-ci
+aws eks update-kubeconfig --region ap-southeast-1 --name simple-bank-007 --role-arn arn:aws:iam::502901958302:user/github-ci
 
 kubectl auth can-i list pods --as=github-ci
+
+
+aws ecr get-login-password | docker login --username AWS --password-stdin 502901958302.dkr.ecr.ap-southeast-1.amazonaws.com
+kubectl config use-context arn:aws:eks:ap-southeast-1:502901958302:cluster/simple-bank-007
+
+export AWS_PROFILE=github-ci
+

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: btnhom2025-api-deployment
+  labels:
+    app: btnhom2025-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: btnhom2025-api
+  template:
+    metadata:
+      labels:
+        app: btnhom2025-api
+    spec:
+      containers:
+        - name: simple-bank-api
+          image: 502901958302.dkr.ecr.ap-southeast-1.amazonaws.com/simplebank007:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080

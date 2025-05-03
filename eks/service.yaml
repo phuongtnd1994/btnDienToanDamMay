@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: btnhom2025-api-service
+spec:
+  selector:
+    app: btnhom2025-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
