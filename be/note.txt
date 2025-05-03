@@ -1,0 +1,26 @@
+migrate create -ext sql -dir db/migration -seq init_schema
+migrate -path db/migration -database "postgresql://postgres:123@192.168.1.22:5432/simple_bank" -verbose up
+
+sqlc generate
+
+curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.2/migrate.linux-amd64.tar.gz | tar xvz
+
+docker exec -it postgres17 psql -U root -d simple_bank
+
+go install github.com/golang/mock/mockgen@v1.6.0
+mockgen -package mockdb -destination db/mock/store.go  github.com/phuongtnd/test01/db/sqlc Store
+
+go test -v -cover ./api
+
+migrate create -ext sql -dir db/migration -seq add_users
+
+docker build -t simplebank:latest --platform linux/amd64 .
+docker run --name simplebank -p 8080:8080 -e GIN_MODE=release --network bank-network simplebank:latest 
+
+docker network create bank-network
+
+kubectl apply -f ./eks/aws-auth.yaml
+
+aws eks update-kubeconfig --region ap-southeast-1 --name my-cluster --role-arn arn:aws:iam::502901958302:user/github-ci
+
+kubectl auth can-i list pods --as=github-ci
