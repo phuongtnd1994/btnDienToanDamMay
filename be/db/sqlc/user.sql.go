@@ -28,7 +28,7 @@ type CreateUserParams struct {
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (Users, error) {
-	row := q.db.QueryRow(ctx, createUser,
+	row := q.db.QueryRowContext(ctx, createUser,
 		arg.Username,
 		arg.HashedPassword,
 		arg.FullName,
@@ -52,7 +52,7 @@ WHERE username = $1 LIMIT 1
 `
 
 func (q *Queries) GetUser(ctx context.Context, username string) (Users, error) {
-	row := q.db.QueryRow(ctx, getUser, username)
+	row := q.db.QueryRowContext(ctx, getUser, username)
 	var i Users
 	err := row.Scan(
 		&i.Username,

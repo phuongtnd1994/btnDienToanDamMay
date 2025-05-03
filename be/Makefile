@@ -46,10 +46,7 @@ server:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go  github.com/phuongtnd/test01/db/sqlc Store
 
-redis:
-	docker run --name redis -p 6379:6379 -d redis:7-alpine
-
-.PHONY: drop_db create_db migrate_up migrate_down migrate_up1 migrate_down1 redis
+.PHONY: drop_db create_db migrate_up migrate_down migrate_up1 migrate_down1
  
 
 

@@ -2,9 +2,8 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
-
-	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type Store interface {
@@ -14,13 +13,13 @@ type Store interface {
 
 type SQLStore struct {
 	*Queries
-	connPool *pgxpool.Pool
+	db *sql.DB
 }
 
-func NewStore(connPool *pgxpool.Pool) Store {
+func NewStore(db *sql.DB) Store {
 	return &SQLStore{
-		Queries:  New(connPool),
-		connPool: connPool,
+		Queries: New(db),
+		db:      db,
 	}
 }
 

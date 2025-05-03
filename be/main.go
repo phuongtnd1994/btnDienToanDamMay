@@ -10,7 +10,7 @@ import (
 
 	"github.com/phuongtnd/test01/api"
 
-	_ "github.com/jackc/pgx/v5"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -29,19 +29,9 @@ func main() {
 	store := db.NewStore(conn)
 	server := api.NewServer(store)
 
-	// redisOpt := asynq.RedisClientOpt{
-	// 	Addr: config.RedisAddress,
-	// }
-
-	// taskDistributor := worker.NewRedisTaskDistributor(redisOpt)
-
 	err = server.Start(config.ServerAddress)
 
 	if err != nil {
 		log.Fatal("cannot start server: ", err)
 	}
 }
-
-// func runTaskProcessor(redisOpt asynq.RedisClientOpt, store db.Store) {
-// 	taskProcessor := worker.NewRedisTaskDistributor(redisOpt, store)
-// }
