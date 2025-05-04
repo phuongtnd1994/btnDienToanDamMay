@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	log.Printf("Finish BTNhom 2025 - Cloud Computing")
+	log.Printf("Finish BTNhom 2025 - Cloud Computing - 20250504")
 	config, err := util.LoadConfig(".")
 	if err != nil {
 		log.Fatal("cannot load config: ", err)
